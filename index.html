@@ -1,0 +1,61 @@
+<html ng-app="mk8">
+<head>
+	<title></title>
+	<script src="js/libs/jquery.js"></script>
+	<script src="js/libs/angular.js"></script>
+</head>
+<body ng-controller="MainController">
+	<label>S <input type="range" min="1" max="6" step="0.25" ng-model="speed" ng-change="filterChanged()" /> {{ speed }}</label><br />
+	<label>A <input type="range" min="1" max="6" step="0.25" ng-model="acceleration" ng-change="filterChanged()" /> {{ acceleration }}</label><br />
+	<label>W <input type="range" min="1" max="6" step="0.25" ng-model="weight" ng-change="filterChanged()" /> {{ weight }}</label><br />
+	<label>H <input type="range" min="1" max="6" step="0.25" ng-model="handling" ng-change="filterChanged()" /> {{ handling }}</label><br />
+	<label>T <input type="range" min="1" max="6" step="0.25" ng-model="traction" ng-change="filterChanged()" /> {{ traction }}</label><br />
+	<label>M <input type="range" min="1" max="6" step="0.25" ng-model="miniTurbo" ng-change="filterChanged()" /> {{ miniTurbo }}</label><br />
+
+	<button ng-click="resetClicked()">Reset</button>
+
+	<table>
+		<thead>
+			<tr>
+				<th rowspan="2">Name</th>
+				<th colspan="4">Speed</th>
+				<th rowspan="2">Acceleration</th>
+				<th rowspan="2">Weight</th>
+				<th colspan="4">Handling</th>
+				<th rowspan="2">Traction</th>
+				<th rowspan="2">Mini-Turbo</th>
+			</tr>
+			<tr>
+				<th>Ground</th>
+				<th>Water</th>
+				<th>Air</th>
+				<th>Anti-Gravity</th>
+				<th>Ground</th>
+				<th>Water</th>
+				<th>Air</th>
+				<th>Anti-Gravity</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="loadout in loadouts">
+				<td>{{ loadout.name }}</td>
+				<td>{{ loadout.speedGround }}</td>
+				<td>{{ loadout.speedWater }}</td>
+				<td>{{ loadout.speedAir }}</td>
+				<td>{{ loadout.speedAntiGravity }}</td>
+				<td>{{ loadout.acceleration }}</td>
+				<td>{{ loadout.weight }}</td>
+				<td>{{ loadout.handlingGround }}</td>
+				<td>{{ loadout.handlingWater }}</td>
+				<td>{{ loadout.handlingAir }}</td>
+				<td>{{ loadout.handlingAntiGravity }}</td>
+				<td>{{ loadout.traction }}</td>
+				<td>{{ loadout.miniTurbo }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script src="js/app.js"></script>
+	<script src="js/models.js"></script>
+</body>
+</html>
