@@ -3,42 +3,68 @@
 	<title></title>
 	<script src="js/libs/jquery.js"></script>
 	<script src="js/libs/angular.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+	<style>
+		.icon
+		{
+			width: 32px;
+			height: 32px;
+		}
+	</style>
 </head>
 <body ng-controller="MainController">
-	<label>S <input type="range" min="1" max="6" step="0.25" ng-model="speed" ng-change="filterChanged()" /> {{ speed }}</label><br />
-	<label>A <input type="range" min="1" max="6" step="0.25" ng-model="acceleration" ng-change="filterChanged()" /> {{ acceleration }}</label><br />
-	<label>W <input type="range" min="1" max="6" step="0.25" ng-model="weight" ng-change="filterChanged()" /> {{ weight }}</label><br />
-	<label>H <input type="range" min="1" max="6" step="0.25" ng-model="handling" ng-change="filterChanged()" /> {{ handling }}</label><br />
-	<label>T <input type="range" min="1" max="6" step="0.25" ng-model="traction" ng-change="filterChanged()" /> {{ traction }}</label><br />
-	<label>M <input type="range" min="1" max="6" step="0.25" ng-model="miniTurbo" ng-change="filterChanged()" /> {{ miniTurbo }}</label><br />
+	<label>Speed <input type="range" min="1" max="6" step="0.25" ng-model="speed" ng-change="filterChanged()" /> {{ speed }}</label><br />
+	<label>Acceleration <input type="range" min="1" max="6" step="0.25" ng-model="acceleration" ng-change="filterChanged()" /> {{ acceleration }}</label><br />
+	<label>Weight <input type="range" min="1" max="6" step="0.25" ng-model="weight" ng-change="filterChanged()" /> {{ weight }}</label><br />
+	<label>Handling <input type="range" min="1" max="6" step="0.25" ng-model="handling" ng-change="filterChanged()" /> {{ handling }}</label><br />
+	<label>Traction <input type="range" min="1" max="6" step="0.25" ng-model="traction" ng-change="filterChanged()" /> {{ traction }}</label><br />
+	<label>Mini-Turbo <input type="range" min="1" max="6" step="0.25" ng-model="miniTurbo" ng-change="filterChanged()" /> {{ miniTurbo }}</label><br />
 
 	<button ng-click="resetClicked()">Reset</button>
 
 	<table>
 		<thead>
 			<tr>
-				<th rowspan="2">Name</th>
-				<th colspan="4">Speed</th>
-				<th rowspan="2">Acceleration</th>
-				<th rowspan="2">Weight</th>
+				<th>Character(s)</th>
+				<th>Kart(s)</th>
+				<th>Tire(s)</th>
+				<th>Glider(s)</th>
+				<th colspan="4" ng-class="">Speed</th>
+				<th rowspan="2" ng-click="sort('acceleration')">Acceleration <i if-sorted-by="acceleration" class="fa fa-chevron-down"></i></th>
+				<th rowspan="2" ng-click="sort('weight')">Weight <i if-sorted-by="weight" class="fa fa-chevron-down"></i></th>
 				<th colspan="4">Handling</th>
-				<th rowspan="2">Traction</th>
-				<th rowspan="2">Mini-Turbo</th>
+				<th rowspan="2" ng-click="sort('traction')">Traction <i if-sorted-by="traction" class="fa fa-chevron-down"></i></th>
+				<th rowspan="2" ng-click="sort('miniTurbo')">Mini-Turbo <i if-sorted-by="miniTurbo" class="fa fa-chevron-down"></i></th>
 			</tr>
 			<tr>
-				<th>Ground</th>
-				<th>Water</th>
-				<th>Air</th>
-				<th>Anti-Gravity</th>
-				<th>Ground</th>
-				<th>Water</th>
-				<th>Air</th>
-				<th>Anti-Gravity</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th ng-click="sort('speedGround')">Ground <i if-sorted-by="speedGround" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('speedWater')">Water <i if-sorted-by="speedWater" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('speedAir')">Air <i if-sorted-by="speedAir" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('speedAntiGravity')">Anti-Gravity <i if-sorted-by="speedAntiGravity" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('handlingGround')">Ground <i if-sorted-by="handlingGround" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('handlingWater')">Water <i if-sorted-by="handlingWater" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('handlingAir')">Air <i if-sorted-by="handlingAir" class="fa fa-chevron-down"></i></th>
+				<th ng-click="sort('handlingAntiGravity')">Anti-Gravity <i if-sorted-by="handlingAntiGravity" class="fa fa-chevron-down"></i></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="loadout in loadouts">
-				<td>{{ loadout.name }}</td>
+				<td>
+					<img class="icon" ng-repeat="character in loadout.characterClass.characters" src="{{ character.iconUrl }}" />
+				</td>
+				<td>
+					<img class="icon" ng-repeat="kart in loadout.kartClass.karts" src="{{ kart.iconUrl }}" />
+				</td>
+				<td>
+					<img class="icon" ng-repeat="tire in loadout.tireClass.tires" src="{{ tire.iconUrl }}" />
+				</td>
+				<td>
+					<img class="icon" ng-repeat="glider in loadout.gliderClass.gliders" src="{{ glider.iconUrl }}" />
+				</td>
 				<td>{{ loadout.speedGround }}</td>
 				<td>{{ loadout.speedWater }}</td>
 				<td>{{ loadout.speedAir }}</td>
@@ -54,6 +80,8 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<p>Showing top {{ filteredLoadouts }} of {{ totalLoadouts }}.</p>
 
 	<script src="js/app.js"></script>
 	<script src="js/models.js"></script>
